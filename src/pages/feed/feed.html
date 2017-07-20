@@ -1,25 +1,45 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>feed</ion-title>
+    <ion-title>Filmes Populares</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
+  
+    <ion-card *ngFor="let filme of listaFilmes">
+      <img [src]="'https://image.tmdb.org/t/p/w500/' + filme.backdrop_path"/>
+      <ion-card-content>
+        <ion-card-title>
+          {{filme.original_title}}
+        </ion-card-title>
+        <p>
+          {{filme.overview}}
+        </p>
+      </ion-card-content>
 
-  <ion-card>
-    <img src="assets/images/card.png"/>
-    <ion-card-content>
-      <ion-card-title>
-        {{nome_usuario}}
-      </ion-card-title>
-      <p>
-        The most popular industrial group ever, and largely
-        responsible for bringing the music to a mass audience.
-      </p>
-    </ion-card-content>
-  </ion-card>
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>{{feed.qtd_likes}}</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="text"></ion-icon>
+            <div>{{feed.qtd_comentarios}}</div>
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <ion-note>
+            {{filme.release_date}}
+          </ion-note>
+        </ion-col>
+      </ion-row>      
+
+    </ion-card>
+  
 
 </ion-content>

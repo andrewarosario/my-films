@@ -5,18 +5,33 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { IntroPage } from "../pages/intro/intro";
+import { ConfiguracoesProvider } from "../providers/configuracoes/configuracoes";
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [
+      ConfiguracoesProvider
+  ]
 })
 export class MyApp {
-  rootPage:any = IntroPage;
+    rootPage:any = IntroPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
+    constructor(platform: Platform, 
+                statusBar: StatusBar, 
+                splashScreen: SplashScreen, 
+                configuracoesProvider: ConfiguracoesProvider) {
 
-      statusBar.styleDefault();
-      splashScreen.hide();
-    });
-  }
+        platform.ready().then(() => {
+            let configuracoes = configuracoesProvider.getConfiguracoes();
+            if (configuracoes == null) {
+                this.rootPage = IntroPage;
+                configuracoesProvider.setConfiguracoes(false);
+            } else {
+                this.rootPage = TabsPage;
+            }
+
+            statusBar.styleDefault();
+            splashScreen.hide();
+        });
+    }
 }
